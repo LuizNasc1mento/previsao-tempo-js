@@ -17,10 +17,22 @@ body {
 }
 
 #container {
-    background-color: #f0f8ff;
+    background: rgba(255, 255, 255, 0.25); /* Um pouco mais opaco para dar leitura */
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 2rem;
     border-radius: 20px;
-    padding: 18px;
-    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    color: #000000; /* GARANTE QUE O TEXTO SEJA BRANCO */
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra leve para ler melhor */
+}
+
+/* Garante que os títulos e valores fiquem visíveis */
+#title, #temp_value, #temp_description, .details span {
+    color: #ffffff !important;
 }
 
 #search {
@@ -51,11 +63,15 @@ padding: 4px 12px;
 
 #weather {
     display: none;
-margin-top: 20px;
-
+    opacity: 0;
+    transform: translateY(20px); /* Começa um pouco abaixo */
+    transition: all 0.6s ease-out; /* Suaviza a aparição */
 }
+
 #weather.show {
     display: block;
+    opacity: 1;
+    transform: translateY(0); /* Sobe para o lugar original */
 }
 
 #weather #title {

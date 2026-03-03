@@ -16,6 +16,7 @@ event.preventDefault ()
 
     if (json.cod === 200) {
         showInfo({
+
             city: json.name,
             country: json.sys.country,
             temp: json.main.temp,
@@ -25,6 +26,9 @@ event.preventDefault ()
             tempIcon: json.weather[0].icon,
             windSpeed: json.wind.speed,
             humidity: json.main.humidity,
+       
+            main: json.weather[0].main,
+       
         })
     } else {
         document.querySelector ("#weather").classList.remove('show');
@@ -37,6 +41,11 @@ event.preventDefault ()
 
 function showInfo (json){
     showAlert('');
+
+     if (typeof updateBackground === "function") {
+        updateBackground(json.main); 
+    }
+
 
     document.querySelector ("#weather").classList.add('show');
 
@@ -58,4 +67,23 @@ function showInfo (json){
 
 function showAlert (msg) {
     document.querySelector ('#alert').innerHTML = msg
+
+     const weatherElement = document.querySelector("#weather");
+    weatherElement.style.display = 'block';
+
+    setTimeout(() => {
+        weatherElement.classList.add('show');
+    }, 50);
+
+}
+
+function updateBackground(clima) {
+    const body = document.body;
+    const cores = {
+        'Clear': 'linear-gradient(135deg, #fceeb5 0%, #fba121 100%)',
+        'Clouds': 'linear-gradient(135deg, #bdc3c7 0%, #2c3e50 100%)',
+        'Rain': 'linear-gradient(135deg, #4b6cb7 0%, #182848 100%)',
+        'Default': 'linear-gradient(135deg, #3b82f6 0%, #4a7dff 100%)'
+    };
+    body.style.background = cores[clima] || cores['Default'];
 }
