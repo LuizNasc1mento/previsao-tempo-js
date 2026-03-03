@@ -1,3 +1,5 @@
+const apiKey = 'eea0e9e49d6e4e14f3f0f2132421d76b'
+
 document.querySelector ('#search').addEventListener ('submit', async (event) => {
 event.preventDefault ()
 
@@ -8,7 +10,7 @@ event.preventDefault ()
          showAlert('Você precisa digitar uma cidade...');
          return
     }
-    const apiKey = '8a60b2de14f7a17c7a11706b2cfcd87c'
+    
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURI(cityname)}&appid=${apiKey}&units=metric&lang=pt_br`
 
     const results = await fetch (apiUrl);
@@ -87,3 +89,36 @@ function updateBackground(clima) {
     };
     body.style.background = cores[clima] || cores['Default'];
 }
+
+document.querySelector('#geo-btn').addEventListener('click', () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            
+            const apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric&lang=pt_br`;
+            
+            const results = await fetch(apiUrl);
+            const json = await results.json();
+
+            if (json.cod === 200) {
+                showInfo({
+                    city: json.name,
+                    country: json.sys.country,
+                    temp: json.main.temp,
+                    tempMax: json.main.temp_max,
+                    tempMin: json.main.temp_min,
+                    description: json.weather[0].description,
+                    tempIcon: json.weather[0].icon,
+                    windSpeed: json.wind.speed,
+                    humidity: json.main.humidity,
+                    main: json.weather[0].main 
+                });
+            }
+        }, () => {
+            showAlert('Não foi possível obter sua localização.');
+        });
+    } else {
+        showAlert('Seu navegador não suporta geolocalização.');
+    }
+});

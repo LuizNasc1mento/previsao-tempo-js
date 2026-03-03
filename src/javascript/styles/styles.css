@@ -30,7 +30,7 @@ body {
     text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.5); /* Adiciona uma sombra leve para ler melhor */
 }
 
-/* Garante que os títulos e valores fiquem visíveis */
+
 #title, #temp_value, #temp_description, .details span {
     color: #ffffff !important;
 }
@@ -160,4 +160,19 @@ padding: 4px 12px;
 #alert img {
     width: 200px;
     margin-top: 20px;
+}
+
+#geo-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    margin-left: 5px; 
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#geo-btn:hover {
+    transform: scale(1.2);
+    color: #fceeb5; 
 }
