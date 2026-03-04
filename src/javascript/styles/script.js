@@ -44,6 +44,9 @@ event.preventDefault ()
 function showInfo (json){
     showAlert('');
 
+    localStorage.setItem('lastCity', json.city);
+    showAlert(``);
+
      if (typeof updateBackground === "function") {
         updateBackground(json.main); 
     }
@@ -120,5 +123,15 @@ document.querySelector('#geo-btn').addEventListener('click', () => {
         });
     } else {
         showAlert('Seu navegador não suporta geolocalização.');
+    }
+});
+
+window.addEventListener('load', () => {
+    const savedCity = localStorage.getItem('lastCity');
+    
+    if (savedCity) {
+        document.querySelector('#city_name').value = savedCity;
+        // Dispara o evento de busca automaticamente
+        document.querySelector('#search').dispatchEvent(new Event('submit'));
     }
 });
